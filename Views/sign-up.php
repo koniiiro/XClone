@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -23,9 +23,9 @@
             <input type="text" class="form-control" name="name" placeholder="ユーザー名、例）techis123" maxlength="50" required>
             <input type="email" class="form-control" name="email" placeholder="メールアドレス" maxlength="254" required>
             <input type="password" class="form-control" name="password" placeholder="パスワード" minlength="4" maxlength="128" required>
-            <button class="mt-3 mb-2" type="submit">登録する</button>
+            <button class="w-100 btn btn-lg mt-3 mb-2" type="submit">登録する</button>
             <p class="mt-3 mb-2"><a href="sign-in.php">ログインする</a></p>
         </form>
-    
+    </main>
 </body>
 </html>
