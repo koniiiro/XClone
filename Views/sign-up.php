@@ -1,15 +1,22 @@
+<?php
+// 設定関連を読み込む
+include_once('../config.php');
+// 便利な関数を読み込む
+include_once('../util.php');
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../Views/img/logo-twitterblue.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo HOME_URL ?>Views/img/logo-twitterblue.svg" type="image/x-icon">
       <!-- // httpローカルホストから記載する、フルパス記載の方法→　href="http://localhost/XClone/Views/img/logo-twitterblue.svg" -->
       <!-- //ドメイン配下から記載する、絶対パス記載の方法→　href="/XClone/Views/img/logo-twitterblue.svg" -->
     
 <!-- Bootstrap css -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-<link rel="stylesheet" href="../Views/css/style.css">
+<link rel="stylesheet" href="<?php echo HOME_URL ?>Views/css/style.css">
 
 <title>会員登録画面/Xクローン</title>
 <meta name="description" content="会員登録画面です">
@@ -17,7 +24,7 @@
 <body class="signup text-center">
     <main class="form-signup">
         <form action="sign-up.php" method="post">
-            <img src="../Views/img/logo-white.svg" alt="" class="logo-white">
+            <img src="<?php echo HOME_URL ?>Views/img/logo-white.svg" alt="" class="logo-white">
             <h1>アカウントを作る</h1>
             <input type="text" class="form-control" name="nickname" placeholder="ニックネーム" maxlength="50" required autofocus>
             <input type="text" class="form-control" name="name" placeholder="ユーザー名、例）techis123" maxlength="50" required>
