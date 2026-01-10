@@ -313,6 +313,10 @@ a {
     color: #fff;
 }
 
+.signup input: placeholder{
+    color:#3f4c5f
+}
+
 .signup input:-webkit-autofill {
     box-shadow: 0 0 0 1000px #123 inset;
     -webkit-text-fill-color: #fff !important;

@@ -9,7 +9,7 @@ include_once('../util.php');
 <html lang="ja">
 
 <head>
- <?php include_once('..Views/common/head.php'); ?>
+ <?php include_once('../Views/common/head.php'); ?>
 
 <title>ログイン画面/Xクローン</title>
 <meta name="description" content="ログイン画面です">
@@ -25,6 +25,6 @@ include_once('../util.php');
             <p class="mt-3 mb-2"><a href="sign-up.php">会員登録する</a></p>
         </form>
     </main>
-    <?php include_once('..Views/common/foot.php'); ?>
+    <?php include_once('../Views/common/foot.php'); ?>
 </body>
 </html>
