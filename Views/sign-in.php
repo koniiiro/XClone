@@ -19,6 +19,12 @@ include_once('../util.php');
         <form action="sign-in.php" method="post">
             <img src="<?php echo HOME_URL ?>Views/img/logo-white.svg" alt="" class="logo-white">
             <h1>Xクローンにログイン</h1>
+            <?php if(isset($view_try_login_result) && $view_try_login_result === false) : ?>
+                <div class="alert alert-warning text-sm" role='alert' >
+                    ログインに失敗しました。メールアドレス、パスワードが正しいか確認してください。
+                </div>
+            <?php endif; ?>
+
             <input type="email" class="form-control" name="email" placeholder="メールアドレス" maxlength="254" required autofocus>
             <input type="password" class="form-control" name="password" placeholder="パスワード" minlength="4" maxlength="128" required>
             <button class="w-100 btn btn-lg mt-3 mb-2" type="submit">ログイン</button>

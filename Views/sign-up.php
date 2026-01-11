@@ -13,7 +13,7 @@
             <h1>アカウントを作る</h1>
             <!-- バリデーションエラーがある場合は表示する -->
              <?php if(!empty($view_error_messages)) :?>
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger text-sm" role="alert">
                     <?php
                     foreach($view_error_messages as $view_error_message){
                         echo '* ' . $view_error_message . '<br>';

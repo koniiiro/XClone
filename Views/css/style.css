@@ -65,6 +65,9 @@ a {
     color: #1af;
     text-decoration: none;
 }
+.text-sm{
+    font-size:13px;
+}
 
 /*　
 サイド
@@ -313,7 +316,7 @@ a {
     color: #fff;
 }
 
-.signup input: placeholder{
+.signup input:placeholder{
     color:#3f4c5f
 }
 
@@ -327,7 +330,6 @@ a {
 ****/
 .profile .profile-area {
     padding: 25px;
-
 }
 
 .profile .profile-area .top {
