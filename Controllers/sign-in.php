@@ -3,8 +3,6 @@
 //サインインコントローラー
 ///////////////////////////
 
-
-
 //設定を読み込み
 include_once'../config.php';
 // 便利な関数を読み込む
@@ -23,7 +21,7 @@ if(isset($_POST['email']) && isset($_POST['password'])) {
     // ログインに成功した場合
     if($user){
         // ユーザー情報をセッションに保存
-
+saveUserSession($user);
         // ホーム画面への遷移
         header('Location:' .HOME_URL . 'Controllers/home.php');
         exit;

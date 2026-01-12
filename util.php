@@ -87,3 +87,34 @@ function convertToDayTimeAgo(string $datetime)
   //unitは単位
   return (int)$time . $unit;
 }
+
+/**
+ * ユーザー情報をセッションに保存
+ * 
+ * @param array $user
+ * @return void
+ */
+function saveUserSession(array $user)
+{
+  //セッションを開始していない場合
+  if(session_status() === PHP_SESSION_NONE){
+    //セッションを開始
+    session_start();
+  }
+  $_SESSION['USER'] = $user;
+}
+/**
+ * ユーザー情報をセッションにから削除
+ * 
+ * @param array $user
+ * @return void
+ */
+function deleteUserSession(array $user)
+{
+  //セッションを開始していない場合
+  if(session_status() === PHP_SESSION_NONE){
+    //セッションを開始
+    session_start();
+  }
+  unset($_SESSION['USER']);
+}
