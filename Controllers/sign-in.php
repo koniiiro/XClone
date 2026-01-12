@@ -18,7 +18,7 @@ $try_login_result = null;
 //メールアドレスとパスワードが入力されている場合
 if(isset($_POST['email']) && isset($_POST['password'])) {
     // ログインチェックを実行
-    $user = [];
+    $user = findUserAndCheckPassword($_POST['email'], $_POST['password']);
 
     // ログインに成功した場合
     if($user){
