@@ -1,46 +1,12 @@
-<?php
-// 設定関連を読み込む
-include_once('../config.php');
-// 便利な関数を読み込む
-include_once('../util.php');
-
-////////////////////////////
-//ツイート一覧
-///////////////////////////
-$view_tweets = [
-  [
-    'user_id' => 1,
-    'user_name' => 'taro',
-    'user_nickname' => '太郎',
-    'user_image_name' => 'sample-person.jpg',
-    'tweet_body' =>'今プログラミングをしています。',
-    'tweet_image_name' => null,
-    'tweet_created_at' =>'2025-12-15 10:49:00',
-    'like_id' => '',
-    'like_count' => 0,
-  ],
-    [
-    'user_id' => 2,
-    'user_name' => 'jiro',
-    'user_nickname' => '次郎',
-    'user_image_name' => null,
-    'tweet_body' =>'コワーキングスペースをオープンしました！',
-    'tweet_image_name' => 'sample-post.jpg',
-    'tweet_created_at' =>'2024-04-30 12:00:00',
-    'like_id' => 1,
-    'like_count' => 1,
-    ],
-  ];
-?>
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
-  <?php include_once('../Views/common/head.php'); ?>
-  
+  <?php include_once('../Views/common/head.php'); ?>  
 <title>ホーム画面 / Xクローン</title>
     <meta name="description" content="ホーム画面です" >
 </head>
+
 <body class="home">
     <div class="container">
   <?php include_once('../Views/common/side.php'); ?> 

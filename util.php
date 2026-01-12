@@ -113,8 +113,33 @@ function deleteUserSession(array $user)
 {
   //セッションを開始していない場合
   if(session_status() === PHP_SESSION_NONE){
-    //セッションを開始
+    //セッション開始
     session_start();
   }
   unset($_SESSION['USER']);
+}
+
+/**
+ * セッションのユーザー情報を取得
+ *
+ * @return array | false
+ */
+function getUserSession()
+{
+    //セッションを開始していない場合
+  if(session_status() === PHP_SESSION_NONE){
+    //セッションを開始
+    session_start();
+  }
+  if(!isset($_SESSION['USER'])) {
+//セッションにユーザー情報がない
+  return false;
+}
+  $user = $_SESSION['USER'];
+//画像のファイル名からファイルのURLを取得
+  if(!isset($user['image_name'])){
+    $user['image_name'] = null;
+}
+    $user['image_path'] = buildImagePath($user['image_name'], 'user');
+    return $user;
 }
