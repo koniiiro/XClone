@@ -6,7 +6,7 @@
 //設定を読み込み
 include_once'../config.php';
 // 便利な関数を読み込む
-include_once('../util.php');
+include_once'../util.php';
 //ユーザーデータ操作モデルを読み込み
 include_once '../Models/users.php';
 

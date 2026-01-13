@@ -6,7 +6,7 @@
 //設定を読み込み
 include_once'../config.php';
 // 便利な関数を読み込む
-include_once('../util.php');
+include_once'../util.php';
 //ユーザーデータ情報をセッションから削除
 deleteUserSession();
 

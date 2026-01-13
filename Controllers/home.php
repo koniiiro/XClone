@@ -3,8 +3,6 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-
-
 /////////////////////////
 //ホームコントローラー
 ///////////////////////////
@@ -12,7 +10,7 @@ error_reporting(E_ALL);
 //設定を読み込み
 include_once'../config.php';
 // 便利な関数を読み込む
-include_once('../util.php');
+include_once '../util.php';
 
 //ログインチェック
 $user = getUserSession();
