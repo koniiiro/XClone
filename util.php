@@ -109,7 +109,7 @@ function saveUserSession(array $user)
  * @param array $user
  * @return void
  */
-function deleteUserSession(array $user)
+function deleteUserSession()
 {
   //セッションを開始していない場合
   if(session_status() === PHP_SESSION_NONE){
