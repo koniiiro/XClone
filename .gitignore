@@ -3,3 +3,6 @@ Views/img_uploaded/
 .DS_Store
 Thumbs.db
 
+#ダンプファイル
+X_clone_testdata.sql
+x_clone_backup.sql

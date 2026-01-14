@@ -12,6 +12,9 @@ include_once'../config.php';
 // 便利な関数を読み込む
 include_once '../util.php';
 
+//ツイートデータ操作モデルを読み込む
+include_once '../Models/tweets.php';
+
 //ログインチェック
 $user = getUserSession();
 if(!$user){
@@ -49,4 +52,6 @@ $view_tweets = [
     ],
   ];
 //   画面表示
+$view_user = $user;
+$view_tweets = findTweets($user);
 include_once '../Views/home.php';
