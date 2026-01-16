@@ -49,4 +49,4 @@ $response= [
     'like_id'=>$like_id,
 ];
 header('Content-Type: application/json; charset=uft-8');
-echo json_sncode($response);
+echo json_encode($response);
