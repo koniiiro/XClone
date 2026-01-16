@@ -17,7 +17,9 @@
                   <?php endif; ?>
 
                     <div class="icon-list">
-                    <div class="like js-like" data-like-id="<?php echo html_escapse($view_tweet['like_id']); ?>">
+                    <div class="like js-like" 
+                    data-tweet-id="<?php echo html_escapse($view_tweet['tweet_id']); ?>"
+                    data-like-id="<?php echo html_escapse($view_tweet['like_id']); ?>" >
                       <?php if (isset($view_tweet['like_id'])){
                         // /いいね！している場合、青のハートアイコンを表示
                         echo '<img src="'.HOME_URL . 'Views/img/icon-heart-twitterblue.svg" alt="">';

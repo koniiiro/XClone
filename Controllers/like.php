@@ -12,7 +12,6 @@ include_once '../util.php';
 //いいね！データ操作モデルを読み込み
 include_once '../Models/likes.php';
 
-
 //ログインチェック
 $user = getUserSession();
 if(!$user){
@@ -25,25 +24,25 @@ if(!$user){
 $like_id = null;
 if(isset($_POST['tweet_id'])){
     $data = [
-        'tweet_id'=>$_POST['tweet_id'],
-        'user_id'=>$user['id'],
+        'tweet_id'=> $_POST['tweet_id'],
+        'user_id'=> $user['id'],
     ];
+    //いいね！登録
+    $like_id = createLike($data);
 }
-//いいね！登録
-createLike($data);
 
 //いいね！を削除する
 if(isset($_POST['like_id'])){
     $data=[
-    'like_id'=>$_POST['like_id'],
-    'user_id'=>$user['id'],
+    'like_id'=> $_POST['like_id'],
+    'user_id'=> $user['id'],
     ];
     //いいね！を削除
     deleteLike($data);
 
 }
 //JSON形式で結果を返却
-$response= [
+$response = [
     'message'=>'successful',
     //いいね！したときには値が入ります
     'like_id'=>$like_id,
