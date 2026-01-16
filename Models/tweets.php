@@ -81,7 +81,7 @@ $query = <<<SQL
     -- ログインユーザーがいいね！したか（している場合、値が入ります）
     L.id AS like_id,
     -- いいね！数
-    (SELECT COUNT(*) FROM likes WHERE status ='active' AND tweet_id = T.id) AS Like_count
+    (SELECT COUNT(*) FROM likes WHERE status ='active' AND tweet_id = T.id) AS like_count
     FROM tweets AS T
     -- ユーザーテーブルを紐づける
     JOIN users AS U
