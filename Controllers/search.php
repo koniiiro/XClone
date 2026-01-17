@@ -1,10 +1,9 @@
-
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 /////////////////////////
-//ホームコントローラー
+//サーチコントローラー
 ///////////////////////////
 
 //設定を読み込み
@@ -21,9 +20,15 @@ if(!$user){
     //ログインしていない
     header('Location:' . HOME_URL . 'Controllers/sign-in.php');
     exit;
-}
 
+
+//検索キーワードを取得
+$keyword = null;
+if(isset($_GET['keyword']))
+    $keyword = $_GET['keyword'];
+}
 //   画面表示
 $view_user = $user;
-$view_tweets = findTweets($user);
-include_once '../Views/home.php';
+$view_keyword = $keyword;
+$view_tweets = findTweets($user, $keyword);
+include_once '../Views/search.php';

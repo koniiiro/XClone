@@ -53,7 +53,7 @@ function createTweet(array $data)
  */
 
 function findTweets(array $user)
-    {
+{
     //DB接続
     $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
