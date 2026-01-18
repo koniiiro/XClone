@@ -42,11 +42,16 @@ if(isset($_GET['user_id'])) {
 // 画面表示データ
 //ユーザー情報
 $view_user = $user;
-
 //プロフィール詳細を取得
 $view_requested_user = findUser($requested_user_id, $user['id']);
-
 // ツイート一覧を取得
 $view_tweets = findTweets($user, null, [$requested_user_id]);
+
+// // //DEBUG
+// echo '==view_requested_user==';
+// var_dump($view_requested_user);
+// echo '==view_tweets==';
+// var_dump($view_tweets);
+
 
 include_once '../Views/profile.php';

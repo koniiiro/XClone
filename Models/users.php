@@ -5,7 +5,6 @@
 
 /**
  * ユーザーを作成
- *
  * @param array $data
  * @return bool
  */
@@ -48,55 +47,8 @@ function createUser(array $data){
 //メールアドレスからユーザーを取得
 /**
  * @param string $email
- * @return array | false
- */
-function findUserByEmail(string $email)
-{
-    //DB接続
-    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-    
-    //接続エラーの場合    
-    if($mysqli->connect_errno){
-        echo 'MYSQLの接続に失敗しました。: ' . $mysqli->connect_error . "\n";
-        exit;
-    }
-
-    // クエリ作成
-    // 入力値をエスケープ
-    $email = $mysqli->real_escape_string($email);
-    $query = 'SELECT * FROM users WHERE email = "' . $email . '"';
-
-    // SQL実行
-$result = $mysqli->query($query);
-if(!$result){
-
-    //MYSQL処理中にエラー発生
-    echo 'エラーメッセージ: ' . $mysqli->error ."\n";
-    $mysqli->close();
-    return false; 
-}
-
-//ユーザー情報を取得
-$user = $result->fetch_array(MYSQLI_ASSOC);
-if(!$user){
-    //ユーザーが存在しない
-    $mysqli->close();
-    return false;
-}
-
-    // DB開放
-$mysqli->close();
-
-    // 結果を返却
-    return $user;
-}
-
-
-//メールアドレスからユーザーを取得して、パスワードを確認
-/**
- * @param string $email
- * @param string $password
- * @return array | false
+ *  @param string $password
+ * @return array|false
  */
 function findUserAndCheckPassword(string $email, string $password)
 {
@@ -117,6 +69,7 @@ function findUserAndCheckPassword(string $email, string $password)
     // SQL実行
 $result = $mysqli->query($query);
 if(!$result){
+
     //MYSQL処理中にエラー発生
     echo 'エラーメッセージ: ' . $mysqli->error ."\n";
     $mysqli->close();
@@ -130,27 +83,19 @@ if(!$user){
     $mysqli->close();
     return false;
 }
-//パスワードチェック
-if(!password_verify($password, $user['password'])) {
-    //パスワード不一致
-    $mysqli->close();
-    return false;
-}
     // DB開放
 $mysqli->close();
 
     // 結果を返却
     return $user;
 }
-
+//メールアドレスからユーザーを取得して、パスワードを確認
 /**
- * @param integer $user_id
- * @param integer\null $login_user_id
+ * @param string $email
  * @return array|false
  */
-function findUser(int $user_id, int $login_user_id = null )
-{ 
-    
+function findUserByEmail(string $email)
+{
     //DB接続
     $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     
@@ -160,6 +105,42 @@ function findUser(int $user_id, int $login_user_id = null )
         exit;
     }
 
+    // クエリ作成
+    // 入力値をエスケープ
+    $email = $mysqli->real_escape_string($email);
+    $query = 'SELECT * FROM users WHERE email = "' . $email . '"';
+
+    // SQL実行
+$result = $mysqli->query($query);
+if(!$result){
+    //MYSQL処理中にエラー発生
+    echo 'エラーメッセージ: ' . $mysqli->error ."\n";
+    $mysqli->close();
+    return false; 
+}
+
+//ユーザー情報を取得
+$user = $result->fetch_array(MYSQLI_ASSOC);
+if(!$user){
+    //ユーザーが存在しない
+    $mysqli->close();
+    return false;
+}
+
+    // DB開放
+$mysqli->close();
+
+    // 結果を返却
+    return $user;
+}
+
+/**
+ * @param integer $user_id
+ * @param integer|null $login_user_id
+ * @return array|false
+ */
+function findUser(int $user_id, int $login_user_id = null )
+{ 
     
     //DB接続
     $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -175,22 +156,22 @@ function findUser(int $user_id, int $login_user_id = null )
     $login_user_id = $mysqli->real_escape_string($login_user_id);
 
     //検索のSQLを作成
-    $query == <<<SQL
+    $query = <<<SQL
     SELECT
         U.id,
         U.name,
         U.email,
         U.image_name,
-        --フォロー中の数
+        -- フォロー中の数
         (SELECT COUNT(1) FROM follows WHERE status = 'active' AND follow_user_id = U.id) AS follow_user_count,
-        --フォワー中の数
+        -- フォワー中の数
         (SELECT COUNT(1) FROM follows WHERE status = 'active' AND followed_user_id = U.id) AS followed_user_count,
-       --ログインユーザーがフォローしている場合、follow ID が入る
+       -- ログインユーザーがフォローしている場合、follow ID が入る
        F.id AS follow_id
     FROM users AS U 
-        --ログインしているユーザーがフォローしているかを確認
+        -- ログインしているユーザーがフォローしているかを確認
         LEFT JOIN follows AS F
-            ON F.staus = 'active' AND F.followed_user_id = 'user_id' AND F.followed_user_id = '$login_user_id'
+            ON F.status = 'active' AND F.followed_user_id = '$user_id' AND F.follow_user_id = '$login_user_id'
     WHERE U.status = 'active' AND U.id = '$user_id'
     SQL;
 
@@ -198,16 +179,14 @@ function findUser(int $user_id, int $login_user_id = null )
     if($result = $mysqli->query($query)){
         //データを配列で返却
         $response = $result->fetch_array(MYSQLI_ASSOC);
-
-    }else{
+    }else{   
         //失敗
         $response = false;
-        echo 'エラーメッセージ:' .$mysqli->error ."/n";
+        echo 'エラーメッセージ:' . $mysqli->error . "\n";
     }
-    // DB開放
+    // DB接続を開放
 $mysqli->close();
 
     // 結果を返却
-    return $user;
-    
+    return $response;
 }

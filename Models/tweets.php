@@ -26,7 +26,7 @@ function createTweet(array $data)
     $statement = $mysqli ->prepare($query);
 
     //クエリをプレースホルダ(？)にカラムの値を紐づけ
-    $statement->bind_param('iss', $data['user_id'], $data['body'],$data['image_name']);
+    $statement->bind_param('iss', $data['user_id'], $data['body'], $data['image_name']);
     
     // クエリを実行
     $response = $statement->execute();
@@ -48,12 +48,13 @@ function createTweet(array $data)
 /**
  * ツイート一覧を取得
  * 
- * @param array $user
- * @param string $keyword
+ * @param array $user ログインしているユーザー情報
+ * @param string $keyword 検索キーワード
+ * @param array $user_ids ユーザーIDの一覧
  * @return array|false
  */
 
-function findTweets(array $user, string $keyword = null)
+function findTweets(array $user, string $keyword = null, array $user_ids = null)
 {
     //DB接続
     $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -98,8 +99,19 @@ if(isset($keyword)) {
        //エスケープ
     $keyword = mysqli->real_escape_string($keyword);
     //ツイートのニックネーム・ユーザー名・本文から部分一致検索
-    $query .= ' AND CONTACT(U.nickname, U.name, T.body) LIKE "%'.$keyword .'%"';
+    $query .= ' AND CONTACT(U.nickname, U.name, T.body) LIKE "%'. $keyword .'%"';
 }
+
+//ユーザーIDが指定されている場合
+if(isset($user_ids)) {
+    foreach($user_ids as $key => $user_id) {
+        $user_ids[$key] = $mysqli->real_escape_string($user_id);
+    }
+    $user_ids_csv = join(',', $user_ids);
+    //ユーザーID一覧に含まれるユーザーのツイートの検索
+    $query .=' AND T.user_id IN (' . $user_ids_csv . ')';
+}
+
 //新しい順に並び替え
 $query .=' ORDER BY T.created_at DESC';
 //表示件数を50件

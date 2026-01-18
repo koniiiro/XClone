@@ -1,27 +1,3 @@
-<?php
-// 設定関連を読み込む
-include_once('../config.php');
-// 便利な関数を読み込む
-include_once('../util.php');
-
-////////////////////////////
-//ツイート一覧
-///////////////////////////
-$view_tweets = [
-  [
-    'user_id' => 1,
-    'user_name' => 'taro',
-    'user_nickname' => '太郎',
-    'user_image_name' => 'sample-person.jpg',
-    'tweet_body' =>'今プログラミングをしています。',
-    'tweet_image_name' => null,
-    'tweet_created_at' =>'2025-12-15 10:49:00',
-    'like_id' => '',
-    'like_count' => 0,
-  ],
-  ];
- ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -34,7 +10,6 @@ $view_tweets = [
 <body class="home profile text-center">
     <div class="container">
        <?php include_once('../Views/common/side.php'); ?>
-
         <div class="main">
           <div class="main-header">
           <h1>太郎</h1>
@@ -99,7 +74,7 @@ $view_tweets = [
           <!-- つぶやき一覧エリア -->
           <?php if (empty($view_tweets)) : ?>
           <p class="p-3">ツイートがありません。</p>
-        <?php else: ?>
+           <?php else: ?>
           <div class="tweet-list">
             <?php foreach ($view_tweets as $view_tweet) {
                   include('../Views/common/tweet.php');
