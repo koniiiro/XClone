@@ -142,3 +142,72 @@ $mysqli->close();
     // 結果を返却
     return $user;
 }
+
+/**
+ * @param integer $user_id
+ * @param integer\null $login_user_id
+ * @return array|false
+ */
+function findUser(int $user_id, int $login_user_id = null )
+{ 
+    
+    //DB接続
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    
+    //接続エラーの場合    
+    if($mysqli->connect_errno){
+        echo 'MYSQLの接続に失敗しました。: ' . $mysqli->connect_error . "\n";
+        exit;
+    }
+
+    
+    //DB接続
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    
+    //接続エラーの場合    
+    if($mysqli->connect_errno){
+        echo 'MYSQLの接続に失敗しました。: ' . $mysqli->connect_error . "\n";
+        exit;
+    }
+
+    // エスケープ
+    $user_id = $mysqli->real_escape_string($user_id);
+    $login_user_id = $mysqli->real_escape_string($login_user_id);
+
+    //検索のSQLを作成
+    $query == <<<SQL
+    SELECT
+        U.id,
+        U.name,
+        U.email,
+        U.image_name,
+        --フォロー中の数
+        (SELECT COUNT(1) FROM follows WHERE status = 'active' AND follow_user_id = U.id) AS follow_user_count,
+        --フォワー中の数
+        (SELECT COUNT(1) FROM follows WHERE status = 'active' AND followed_user_id = U.id) AS followed_user_count,
+       --ログインユーザーがフォローしている場合、follow ID が入る
+       F.id AS follow_id
+    FROM users AS U 
+        --ログインしているユーザーがフォローしているかを確認
+        LEFT JOIN follows AS F
+            ON F.staus = 'active' AND F.followed_user_id = 'user_id' AND F.followed_user_id = '$login_user_id'
+    WHERE U.status = 'active' AND U.id = '$user_id'
+    SQL;
+
+    //SQLを実行
+    if($result = $mysqli->query($query)){
+        //データを配列で返却
+        $response = $result->fetch_array(MYSQLI_ASSOC);
+
+    }else{
+        //失敗
+        $response = false;
+        echo 'エラーメッセージ:' .$mysqli->error ."/n";
+    }
+    // DB開放
+$mysqli->close();
+
+    // 結果を返却
+    return $user;
+    
+}
