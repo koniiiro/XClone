@@ -159,6 +159,7 @@ function findUser(int $user_id, int $login_user_id = null )
     $query = <<<SQL
     SELECT
         U.id,
+        U.nickname,
         U.name,
         U.email,
         U.image_name,

@@ -12,60 +12,59 @@
        <?php include_once('../Views/common/side.php'); ?>
         <div class="main">
           <div class="main-header">
-          <h1>太郎</h1>
+          <h1><?php echo html_escapse($view_requested_user['nickname']); ?></h1>
         </div>
 
         <!-- プロフィールエリア -->
  <div class="profile-area">
     <div class="top">
-        <div class="user"><img src="<?php echo HOME_URL ?>Views/img_uploaded/user/sample-person.jpg" alt=""></div>
+        <div class="user"><img src="<?php echo buildImagePath($view_requested_user['image_name'], 'user'); ?>" alt=""></div>
         
-        <?php if(isset($_GET['user_id'])): ?>
+      <?php if($view_user['id'] !== $view_requested_user['id']): ?>
           <!-- 相手のページ：フォローボタン -->
-           <?php if(isset($_GET['case'])): ?>
+           <?php if(isset($view_requested_user['follow_id'])): ?>
              <button class="btn btn-sm">フォローを外す</button>
            <?php else: ?>
              <button class="btn btn-sm btn-reverse">フォローする</button>
-        <?php endif; ?>
-        <?php else: ?>
+      <?php endif; ?>
+      <?php else: ?>
          <!-- プロフィール：プロフィール編集ボタン -->
         <button class="btn btn-reverse btn-sm" data-bs-toggle="modal" data-bs-target="#js-modal">プロフィール編集</button>
-        <?php endif; ?>
-
-    <div class="modal fade" id="js-modal" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form action="profile.php" method="post" enctype="multipart/form-data">
-            <div class="modal-header">
-              <h5 class="modal-title">プロフィール編集</h5>
-              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div class="user">
-                <img src="<?php echo HOME_URL ?>Views/img_uploaded/user/sample-person.jpg" alt="">
+            <div class="modal fade" id="js-modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="profile.php" method="post" enctype="multipart/form-data">
+              <div class="modal-header">
+                <h5 class="modal-title">プロフィール編集</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <input type="text" class="form-control mb-4" name="nickname" value="太郎" placeholder="ニックネーム" maxlength="50" required autofocus>
-              <input type="text" class="form-control mb-4" name="name" value="taro" placeholder="ユーザー名、例）techis123" maxlength="50" required>
-              <input type="email" class="form-control mb-4" name="email" value="taro@techis.jp" placeholder="メールアドレス" maxlength="254" required>
-              <input type="password" class="form-control mb-4" name="password" value="" placeholder="パスワードを変更する場合は入力" minlength="4" maxlength="128" required>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-reverse" data-bs-dismiss="modal">キャンセル</button>
-              <button class="btn" type="submit">保存する</button>
-            </div>
-          </form>
+              <div class="modal-body">
+                <div class="user">
+                  <img src="<?php echo buildImagePath($view_user['image_name'], 'user'); ?>" alt="">
+                </div>
+                <input type="text" class="form-control mb-4" name="nickname" value="<?php echo html_escapse($view_user['nickname']); ?>" placeholder="ニックネーム" maxlength="50" required autofocus>
+                <input type="text" class="form-control mb-4" name="name" value="<?php echo html_escapse($view_user['name']); ?>" placeholder="ユーザー名、例）techis123" maxlength="50" required>
+                <input type="email" class="form-control mb-4" name="email" value="<?php echo html_escapse($view_user['email']); ?>" placeholder="メールアドレス" maxlength="254" required>
+                <input type="password" class="form-control mb-4" name="password" value="" placeholder="パスワードを変更する場合は入力" minlength="4" maxlength="128" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-reverse" data-bs-dismiss="modal">キャンセル</button>
+                <button class="btn" type="submit">保存する</button>
+              </div>
+            </form>
 
+          </div>
         </div>
+        </div>
+      <?php endif; ?>
       </div>
-    </div>
-      </div>
-        <div class="name">太郎</div>
-        <div class="text-muted">@taro</div>
+        <div class="name"><?php echo html_escapse($view_requested_user['nickname']); ?></div>
+        <div class="text-muted">@<?php echo html_escapse($view_requested_user['name']); ?></div>
         <div class="follow-follower">
-          <div class="follow-count">1</div>
-          <div class="follow-text">フォロー中</div>
-          <div class="follow-count">1</div>
-          <div class="follow-text">フォロワー</div>
+        <div class="follow-count"><?php echo html_escapse($view_requested_user['follow_user_count']); ?></div>
+        <div class="follow-text">フォロー中</div>
+        <div class="follow-count"><?php echo html_escapse($view_requested_user['followed_user_count']); ?></div>
+        <div class="follow-text">フォロワー</div>
        </div>
       </div>
          <!-- 仕切りエリア -->
