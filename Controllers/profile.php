@@ -1,4 +1,3 @@
-
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -24,12 +23,35 @@ if(!$user){
     header('Location:' . HOME_URL . 'Controllers/sign-in.php');
     exit;
 }
-
 //ユーザー情報変更
 //ニックネーム・ユーザー名・メールアドレスが入力されている場合
-if(true){
-    //TODO: ユーザー情報変更する処理
+if(isset($_POST['nickname']) && isset($_POST['name']) && isset($_POST['email'])){
+    $data = [
+        'id' => $user['id'],
+        'name' => $_POST['name'],
+        'nickname' => $_POST['nickname'],
+        'email' => $_POST['email']
+    ];
+    //パスワードが入力されている場合
+    if(isset($_POST['password']) && $_POST['password'] !==''){
+        $data['password'] = $_POST['password'];
+    }
+    //ファイルがアップロードされている場合
+    if(isset($_FILES['image']) && is_uploaded_file($_FILES['image']['tmp_name'])) {
+        $data['image_name'] = uploadImage($user, $_FILES['image'], 'user');
+    }
+    //更新を実行
+    if(updateUser($data)) {
+        //更新後ユーザー情報をセッションに保存しなおす
+        $user = findUser($user['id']);
+        saveUserSession($user);
+
+        //ページをリロード
+        header('Location:' . HOME_URL . 'Controllers/profile.php');
+        exit;
+    }
 }
+
 //-------------------------------------------------
 //表示するユーザーIDを取得(デフォルトはログインユーザー)
 //-------------------------------------------------
@@ -52,6 +74,5 @@ $view_tweets = findTweets($user, null, [$requested_user_id]);
 // var_dump($view_requested_user);
 // echo '==view_tweets==';
 // var_dump($view_tweets);
-
 
 include_once '../Views/profile.php';
