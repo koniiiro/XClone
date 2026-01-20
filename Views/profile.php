@@ -24,18 +24,24 @@
 
           <!-- 相手のページ：フォローボタン -->
            <?php if(isset($view_requested_user['follow_id'])): ?>
-             <button class="btn btn-sm">フォローを外す</button>
+             <button class="btn btn-sm js-follow" 
+             data-followed-user-id="<?php echo html_escapse($view_requested_user['id']); ?>" 
+             data-follow-id="<?php echo html_escapse($view_requested_user['follow_id']); ?>">
+             フォローを外す</button>
            <?php else: ?>
-             <button class="btn btn-sm btn-reverse">フォローする</button>
-          <?php endif; ?>
+             <button class="btn btn-sm btn-reverse js-follow" 
+             data-followed-user-id="<?php echo html_escapse($view_requested_user['id']); ?>">
+             フォローする</button>
+            <?php endif; ?>
       <?php else: ?>
          <!-- プロフィール：プロフィール編集ボタン -->
         <button class="btn btn-reverse btn-sm" data-bs-toggle="modal" data-bs-target="#js-modal">プロフィール編集</button>
             <div class="modal fade" id="js-modal" tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
-            <form action="profile.php" method="post" enctype="multipart/form-data">
-              <div class="modal-header">
+
+        <form action="profile.php" method="post" enctype="multipart/form-data">
+          <div class="modal-header">
                 <h5 class="modal-title">プロフィール編集</h5>
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
@@ -44,22 +50,24 @@
                 <img src="<?php echo buildImagePath($view_user['image_name'], 'user'); ?>" alt="">
                 </div>
                 <div class="mb-3">
-                <label for="profile_image" class="mb-1">プロフィール写真</label>
-                <input type="file" id="profile_image" name="image" class="form-control form-control-sm">
+
+          <label for="profile_image" class="mb-1">プロフィール写真</label>
+                
+          <input type="file" id="profile_image" name="image" class="form-control form-control-sm">
                 </div>
                 
                 <input type="text" class="form-control mb-4" name="nickname" value="<?php echo html_escapse($view_user['nickname']); ?>" placeholder="ニックネーム" maxlength="50" required autofocus>
-                <input type="text" class="form-control mb-4" name="name" value="<?php echo html_escapse($view_user['name']); ?>" placeholder="ユーザー名、例）techis123" maxlength="50" required>
+                <input type="text" class="form-control mb-4" name="name" value="<?php echo html_escapse($view_user['name']); ?>" placeholder="ユーザー名" maxlength="50" required>
                 <input type="email" class="form-control mb-4" name="email" value="<?php echo html_escapse($view_user['email']); ?>" placeholder="メールアドレス" maxlength="254" required>
                 <input type="password" class="form-control mb-4" name="password" value="" placeholder="パスワードを変更する場合は入力" minlength="4" maxlength="128" required>
               </div>
 
               <div class="modal-footer">
-                <button type="button" class="btn btn-reverse" data-bs-dismiss="modal">キャンセル</button>
+                <button class="btn btn-reverse" data-bs-dismiss="modal">キャンセル</button>
                 <button class="btn" type="submit">保存する</button>
               </div>
-            </form>
 
+            </form>
           </div>
         </div>
         </div>
@@ -79,8 +87,8 @@
 
           <!-- つぶやき一覧エリア -->
           <?php if (empty($view_tweets)) : ?>
-          <p class="p-3">ツイートがありません。</p>
-           <?php else: ?>
+            <p class="p-3">ツイートがありません。</p>
+          <?php else : ?>
           <div class="tweet-list">
             <?php foreach ($view_tweets as $view_tweet) {
                   include('../Views/common/tweet.php');

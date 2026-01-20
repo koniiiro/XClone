@@ -13,4 +13,6 @@
 <!-- Bootstrap js  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <!-- いいね！JS -->
-<script src="<?php echo HOME_URL ?>Views/js/like.js" defer></script>
+<script src="<?php echo HOME_URL; ?>Views/js/like.js" defer></script>
+<!-- フォローJS -->
+<script src="<?php echo HOME_URL; ?>Views/js/follow.js" defer></script>

@@ -5,7 +5,7 @@
 ///////////////////////////
 
 //設定を読み込み
-include_once'../config.php';
+include_once '../config.php';
 // 便利な関数を読み込む
 include_once '../util.php';
 
@@ -25,7 +25,7 @@ $follow_id = null;
 // フォローしたい相手のユーザーIDがセットされているか確認
 if(isset($_POST['followed_user_id'])){
     $data = [
-        'followed_user_'=> $_POST['followed_user_'],
+        'followed_user_id'=> $_POST['followed_user_id'],
         'follow_user_id'=> $user['id'],
     ];
     //フォロー登録
@@ -36,7 +36,7 @@ if(isset($_POST['followed_user_id'])){
 if(isset($_POST['follow_id'])){
     $data=[
     'follow_id'=> $_POST['follow_id'],
-    'user_id'=> $user['id'],
+    'follow_user_id'=> $user['id'],
     ];
 
     //フォローを削除
