@@ -21,12 +21,13 @@
         <div class="user"><img src="<?php echo buildImagePath($view_requested_user['image_name'], 'user'); ?>" alt=""></div>
         
       <?php if($view_user['id'] !== $view_requested_user['id']): ?>
+
           <!-- 相手のページ：フォローボタン -->
            <?php if(isset($view_requested_user['follow_id'])): ?>
              <button class="btn btn-sm">フォローを外す</button>
            <?php else: ?>
              <button class="btn btn-sm btn-reverse">フォローする</button>
-      <?php endif; ?>
+          <?php endif; ?>
       <?php else: ?>
          <!-- プロフィール：プロフィール編集ボタン -->
         <button class="btn btn-reverse btn-sm" data-bs-toggle="modal" data-bs-target="#js-modal">プロフィール編集</button>
@@ -40,13 +41,19 @@
               </div>
               <div class="modal-body">
                 <div class="user">
-                  <img src="<?php echo buildImagePath($view_user['image_name'], 'user'); ?>" alt="">
+                <img src="<?php echo buildImagePath($view_user['image_name'], 'user'); ?>" alt="">
                 </div>
+                <div class="mb-3">
+                <label for="profile_image" class="mb-1">プロフィール写真</label>
+                <input type="file" id="profile_image" name="image" class="form-control form-control-sm">
+                </div>
+                
                 <input type="text" class="form-control mb-4" name="nickname" value="<?php echo html_escapse($view_user['nickname']); ?>" placeholder="ニックネーム" maxlength="50" required autofocus>
                 <input type="text" class="form-control mb-4" name="name" value="<?php echo html_escapse($view_user['name']); ?>" placeholder="ユーザー名、例）techis123" maxlength="50" required>
                 <input type="email" class="form-control mb-4" name="email" value="<?php echo html_escapse($view_user['email']); ?>" placeholder="メールアドレス" maxlength="254" required>
                 <input type="password" class="form-control mb-4" name="password" value="" placeholder="パスワードを変更する場合は入力" minlength="4" maxlength="128" required>
               </div>
+
               <div class="modal-footer">
                 <button type="button" class="btn btn-reverse" data-bs-dismiss="modal">キャンセル</button>
                 <button class="btn" type="submit">保存する</button>

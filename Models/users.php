@@ -43,6 +43,65 @@ function createUser(array $data){
     //結果を返却
     return $response;
 }
+/**
+ * ユーザー情報を更新
+ * 
+ * @param array $data
+ * @return bool
+ */
+function updateUser(array $data)
+{
+     //DB接続
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+     //接続エラーの場合    
+    if($mysqli->connect_errno){
+        echo 'MYSQLの接続に失敗しました。: ' . $mysqli->connect_error . "\n";
+        exit;
+    }
+    //更新日時を保存データに追加
+    $data['updated_at'] =date('Y-m-d H:i:s');
+
+    //パスワードがある場合→ハッシュ値に変換
+    if(isset($data['password'])) {
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+    }
+    // SQLクエリ作成準備
+
+    // （UPDATE table_name
+    // SET column1 = "value1", column2 = "value2",...
+    // WHERE condition;）
+
+    // ユーザーIDをエスケープ
+    $user_id = $mysqli->real_escape_string($data['id']);
+    // SET句のカラムを準備
+    $set_columns = [];
+    foreach(['name', 'nickname', 'email', 'password', 'image_name', 'updated_at'] as $column) {
+        //入力があれば、更新の対象にする
+        if(isset($data[$column]) && $data[$column] !== '') {
+            $value = $mysqli->real_escape_string($data[$column]);
+            $set_columns[] = $column . ' = "' . $value . '"';
+        }
+    }
+
+    // SQLクエリ作成
+    $query = 'UPDATE users ';
+    $query .= ' SET ' . join(',', $set_columns);
+    $query .= ' WHERE id = ' . $user_id;
+
+    // SQLクエリを実行
+    $response = $mysqli->query($query);
+
+    // SQLエラーの場合
+    if($response === false) {
+        echo 'エラーメッセージ：' . $mysqli->error . "\n";
+
+    // DB接続を開放
+    $mysqli->close();
+
+    return $response;
+    }
+ }
 
 //メールアドレスからユーザーを取得
 /**
