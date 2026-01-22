@@ -66,20 +66,24 @@ function findNotifications(int $user_id){
     //SQLクエリを作成
     $query = <<<SQL
         SELECT
-            --通知
+            
             N.id AS notification_id,
             N.message as notification_message,
-            --ユーザー
+
             U.name AS user_name,
             U.nickname AS user_nickname,
             U.image_name AS user_image_name 
         FROM notifications AS N 
+            JOIN users AS U
+                ON U.id = N.sent_user_id AND U.status = 'active'
         WHERE N.status = 'active' AND N.received_user_id ='$user_id'
-        JOIN users AS U
-            ON U.id = N.sent_user_id AND U.status = 'active'
+
         ORDER BY N.created_at DESC
         LIMIT 50
     SQL;
+
+    // var_dump($query);
+    // exit;
 
     //クエリを実行
     if($result = $mysqli->query($query)) {
