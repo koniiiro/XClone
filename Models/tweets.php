@@ -96,7 +96,7 @@ SQL;
 
 //検索キーワードが指定されていた場合
 if(isset($keyword)) {
-       //エスケープ
+    //エスケープ
     $keyword = mysqli->real_escape_string($keyword);
     //ツイートのニックネーム・ユーザー名・本文から部分一致検索
     $query .= ' AND CONTACT(U.nickname, U.name, T.body) LIKE "%'. $keyword .'%"';
@@ -133,3 +133,41 @@ $query .=' LIMIT 50';
 }
 
  
+/**
+ * ツイートを1件取得
+ * 
+ * @param array $tweet_id
+ * @return array|false
+ */
+
+function findTweet(int $tweet_id)
+{
+    //DB接続
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    //接続エラーの場合    
+    if($mysqli->connect_errno){
+        echo 'MYSQLの接続に失敗しました。: ' . $mysqli->connect_error . "\n";
+        exit;
+    }
+
+    //エスケープ
+    $tweet_id = $mysqli->real_escape_string($tweet_id);
+
+    // SQLクエリ作成(ツイート検索)
+    $query = 'SELECT*FROM tweets WHERE status = "active" AND id = ' . $tweet_id; 
+
+    //SQLを実行
+    if ($result = $mysqli->query($query)){
+        //データを１件取得
+        $response = $result->fetch_array(MYSQLI_ASSOC);
+    }else {
+        $response = false;
+        echo 'エラーメッセージ:' . $mysqli->error . "\n";
+    }
+
+    $mysqli->close();
+
+    return $response;
+
+    }
