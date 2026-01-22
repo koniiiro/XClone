@@ -20,13 +20,14 @@ if(!$user){
     //ログインしていない
     header('Location:' . HOME_URL . 'Controllers/sign-in.php');
     exit;
-
+}
 
 //検索キーワードを取得
 $keyword = null;
-if(isset($_GET['keyword']))
+if(isset($_GET['keyword'])){
     $keyword = $_GET['keyword'];
 }
+
 //   画面表示
 $view_user = $user;
 $view_keyword = $keyword;

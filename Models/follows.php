@@ -92,3 +92,48 @@ function deleteFollow(array $data){
     $mysqli->close();
     return $response;
 }
+
+/**
+ * 自分がフォローしているユーザーIDの一覧取得
+ * 
+ * @param array $follow_user_id
+ * @return array|false
+ */
+function findFollowingUserIds(int $follow_user_id) 
+{
+
+    //DB接続
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    //接続エラーの場合    
+    if($mysqli->connect_errno){
+        echo 'MYSQLの接続に失敗しました。: ' . $mysqli->connect_error . "\n";
+        exit;
+    }
+
+    //エスケープ
+    $follow_user_id = $mysqli->real_escape_string($follow_user_id);
+
+    // SQLクエリ作成(フォローしているユーザーを検索)
+    $query = 'SELECT followed_user_id FROM follows WHERE status = "active" AND follow_user_id = ' . $follow_user_id; 
+
+    //SQLを実行
+    $result = $mysqli->query($query);
+    if (!$result) {
+        echo 'エラーメッセージ:' . $mysqli->error . "\n";
+        return false;
+    }
+        //フォローID一覧を取得
+        $follows = $result->fetch_all(MYSQLI_ASSOC);
+   
+        //ユーザーIDの一覧を作成
+        $following_user_ids = [];
+        foreach ($follows as $follow) {
+        $following_user_ids [] = $follow['followed_user_id'];
+        }
+
+    $mysqli->close();
+
+    return $following_user_ids;
+
+}
